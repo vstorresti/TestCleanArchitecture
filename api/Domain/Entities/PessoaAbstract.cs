@@ -2,7 +2,7 @@ using System;
 
 namespace api.Domain.Entities
 {
-    public abstract class PessoaAbstract
+    public abstract class PessoaAbstract : BaseModel
     {
         public string Nome { get; set; }
 

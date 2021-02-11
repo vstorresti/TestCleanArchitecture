@@ -1,28 +1,27 @@
+using api.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Domain.Entities;
 
 namespace api.Domain.Services
 {
     public class ClienteService
     {
-        public ClienteService(IGenericRepository repository)
+        private readonly ClienteRepository _clienteRepository;
+        public ClienteService(ClienteRepository clienteRepository)
         {
-            _repository = repository;
+            _clienteRepository = clienteRepository;
         }
 
-        private IGenericRepository _repository;
 
         public async Task Save(Cliente cliente)
         {
-            // TO DO
-            await _repository.Save(cliente);
+            await _clienteRepository.Save(cliente);
         }
 
         public async Task<ICollection<Cliente>> All()
         {
-            return await _repository.All<Cliente>();
+            return await _clienteRepository.All();
         }
-        
+
     }
 }

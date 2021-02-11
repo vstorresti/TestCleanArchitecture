@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using api.Domain.Entities;
+using api.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using api.Domain.ViewModel;
-using api.Infra.Database;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace api.Controllers
 {
@@ -14,24 +11,25 @@ namespace api.Controllers
     {
         private readonly ILogger<ClienteController> _logger;
 
-        private readonly EntityContext _context;
+        private readonly ClienteService _clienteService;
 
         public ClienteController(
             ILogger<ClienteController> logger,
-            EntityContext context
+            ClienteService clienteService
         ) :
             base(logger)
         {
             _logger = logger;
-            _context = context;
+            _clienteService = clienteService;
         }
+
 
         [HttpGet]
         [Route("/cliente")]
-        public async Task<ActionResult<UserView>> ListAll()
+        public async Task<ICollection<Cliente>> ListAll()
         {
-            var clientes = await _context.Clientes.All();
-            return clientes;
+            return await _clienteService.All();
         }
+
     }
 }

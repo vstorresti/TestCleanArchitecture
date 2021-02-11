@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace api.Migrations
 {
-    public partial class InitialCommit : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,8 @@ namespace api.Migrations
                 name: "Endereco",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Cep = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Numero = table.Column<int>(type: "int", nullable: false),
@@ -28,13 +29,14 @@ namespace api.Migrations
                 name: "Cliente",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoDeUsuario = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaDeNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EnderecoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    EnderecoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,13 +53,14 @@ namespace api.Migrations
                 name: "Operador",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Matricula = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoDeUsuario = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaDeNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EnderecoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    EnderecoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

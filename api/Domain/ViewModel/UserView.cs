@@ -1,5 +1,5 @@
-using System;
 using api.Domain.Entities;
+using System;
 
 namespace api.Domain.ViewModel
 {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Infra.Database;
 
 namespace api.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20210211024431_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,17 +51,6 @@ namespace api.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Cliente");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Cpf = "111.111.111-11",
-                            DiaDeNascimento = new DateTime(2021, 2, 10, 23, 58, 13, 698, DateTimeKind.Local).AddTicks(3887),
-                            Nome = "Cássio Morais",
-                            Senha = "senhateste@",
-                            TipoDeUsuario = 1
-                        });
                 });
 
             modelBuilder.Entity("api.Domain.Entities.Endereco", b =>

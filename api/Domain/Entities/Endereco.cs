@@ -1,10 +1,8 @@
-using System;
 namespace api.Domain.Entities
 {
-    public class Endereco
+    public class Endereco : BaseModel
     {
-        public Guid Id { get; set; }
-        
+
         public string Cep { get; set; }
 
         public string Logradouro { get; set; }

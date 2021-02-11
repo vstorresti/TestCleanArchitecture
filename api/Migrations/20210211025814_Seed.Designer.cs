@@ -10,22 +10,23 @@ using api.Infra.Database;
 namespace api.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210210211849_InitialCommit")]
-    partial class InitialCommit
+    [Migration("20210211025814_Seed")]
+    partial class Seed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("api.Domain.Entities.Cliente", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
@@ -33,8 +34,8 @@ namespace api.Migrations
                     b.Property<DateTime>("DiaDeNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("EnderecoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
@@ -50,13 +51,25 @@ namespace api.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Cliente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Cpf = "111.111.111-11",
+                            DiaDeNascimento = new DateTime(2021, 2, 10, 23, 58, 13, 698, DateTimeKind.Local).AddTicks(3887),
+                            Nome = "Cássio Morais",
+                            Senha = "senhateste@",
+                            TipoDeUsuario = 1
+                        });
                 });
 
             modelBuilder.Entity("api.Domain.Entities.Endereco", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Cep")
                         .HasColumnType("nvarchar(max)");
@@ -83,15 +96,16 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Domain.Entities.Operador", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DiaDeNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("EnderecoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Matricula")
                         .HasColumnType("nvarchar(max)");

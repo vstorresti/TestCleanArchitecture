@@ -1,20 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using api.Domain.Services;
+using api.Infra.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Linq;
-using Microsoft.EntityFrameworkCore;
-using System.IO;
-using api.Infra.Database;
 
 namespace api
 {
@@ -31,9 +23,9 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
+            //JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
             services.AddDbContext<EntityContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
             services.AddControllersWithViews();
 
             services.AddControllers();
@@ -41,6 +33,10 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
+
+            services.AddScoped<ClienteRepository, ClienteRepository>();
+            services.AddScoped<ClienteService, ClienteService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +49,7 @@ namespace api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
             }
 
+            UpdateDatabase(app);
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -63,6 +60,19 @@ namespace api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<EntityContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
