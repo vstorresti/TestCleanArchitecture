@@ -41,12 +41,12 @@ namespace api.Infra.Database
             modelBuilder.Entity<Cliente>().HasData(new Cliente
             {
                 Id = -1,
-                Nome = "Cássio Morais",
+                Nome = "Cï¿½ssio Morais",
                 Cpf = "111.111.111-11",
                 DiaDeNascimento = DateTime.Now,
                 Senha = "senhateste@",
                 TipoDeUsuario = EnumTipoDeUsuario.CLIENTE,
-                EndereçoId = -1
+                EnderecoId = -1
             });
 
 

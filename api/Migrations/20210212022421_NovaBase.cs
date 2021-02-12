@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace api.Migrations
 {
-    public partial class initial : Migration
+    public partial class NovaBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace api.Migrations
                     Cep = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Numero = table.Column<int>(type: "int", nullable: false),
-                    Complemento = table.Column<int>(type: "int", nullable: false),
+                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -65,14 +65,14 @@ namespace api.Migrations
                     TipoDeUsuario = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaDeNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndereçoId = table.Column<int>(type: "int", nullable: false)
+                    EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Clientes_Enderecos_EndereçoId",
-                        column: x => x.EndereçoId,
+                        name: "FK_Clientes_Enderecos_EnderecoId",
+                        column: x => x.EnderecoId,
                         principalTable: "Enderecos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -89,14 +89,14 @@ namespace api.Migrations
                     TipoDeUsuario = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaDeNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndereçoId = table.Column<int>(type: "int", nullable: false)
+                    EnderecoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Operadores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Operadores_Enderecos_EndereçoId",
-                        column: x => x.EndereçoId,
+                        name: "FK_Operadores_Enderecos_EnderecoId",
+                        column: x => x.EnderecoId,
                         principalTable: "Enderecos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -186,10 +186,20 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Clientes_EndereçoId",
+            migrationBuilder.InsertData(
+                table: "Enderecos",
+                columns: new[] { "Id", "Cep", "Cidade", "Complemento", "Estado", "Logradouro", "Numero" },
+                values: new object[] { -1, "00000-000", "Belo Horizonte", null, "MG", "Rua Fulano de tal, Bairro Beltrano", 31 });
+
+            migrationBuilder.InsertData(
                 table: "Clientes",
-                column: "EndereçoId");
+                columns: new[] { "Id", "Cpf", "DiaDeNascimento", "EnderecoId", "Nome", "Senha", "TipoDeUsuario" },
+                values: new object[] { -1, "111.111.111-11", new DateTime(2021, 2, 11, 23, 24, 20, 982, DateTimeKind.Local).AddTicks(950), -1, "C�ssio Morais", "senhateste@", 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_EnderecoId",
+                table: "Clientes",
+                column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LocacaoVeiculos_CheckListId",
@@ -212,9 +222,9 @@ namespace api.Migrations
                 column: "MarcaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operadores_EndereçoId",
+                name: "IX_Operadores_EnderecoId",
                 table: "Operadores",
-                column: "EndereçoId");
+                column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Veiculos_ModeloId",

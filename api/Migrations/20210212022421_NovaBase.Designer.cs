@@ -10,8 +10,8 @@ using api.Infra.Database;
 namespace api.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210212014335_alteraLogradouro")]
-    partial class alteraLogradouro
+    [Migration("20210212022421_NovaBase")]
+    partial class NovaBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace api.Migrations
                     b.Property<DateTime>("DiaDeNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EndereçoId")
+                    b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -72,7 +72,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EndereçoId");
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("Clientes");
 
@@ -81,9 +81,9 @@ namespace api.Migrations
                         {
                             Id = -1,
                             Cpf = "111.111.111-11",
-                            DiaDeNascimento = new DateTime(2021, 2, 11, 22, 43, 35, 169, DateTimeKind.Local).AddTicks(3873),
-                            EndereçoId = -1,
-                            Nome = "Cássio Morais",
+                            DiaDeNascimento = new DateTime(2021, 2, 11, 23, 24, 20, 982, DateTimeKind.Local).AddTicks(950),
+                            EnderecoId = -1,
+                            Nome = "C�ssio Morais",
                             Senha = "senhateste@",
                             TipoDeUsuario = 1
                         });
@@ -217,7 +217,7 @@ namespace api.Migrations
                     b.Property<DateTime>("DiaDeNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EndereçoId")
+                    b.Property<int>("EnderecoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Matricula")
@@ -234,7 +234,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EndereçoId");
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("Operadores");
                 });
@@ -281,7 +281,7 @@ namespace api.Migrations
                 {
                     b.HasOne("api.Domain.Entities.Endereco", "Endereco")
                         .WithMany()
-                        .HasForeignKey("EndereçoId")
+                        .HasForeignKey("EnderecoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -328,7 +328,7 @@ namespace api.Migrations
                 {
                     b.HasOne("api.Domain.Entities.Endereco", "Endereco")
                         .WithMany()
-                        .HasForeignKey("EndereçoId")
+                        .HasForeignKey("EnderecoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
