@@ -25,5 +25,19 @@ namespace api.Domain.Services.Clientes
             return await _clienteRepository.All();
         }
 
+        public Task FindById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task Update(Cliente t)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Cliente> Delete(Cliente t)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

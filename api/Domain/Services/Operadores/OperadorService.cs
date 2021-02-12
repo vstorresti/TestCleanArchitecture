@@ -25,5 +25,19 @@ namespace api.Domain.Services.Operadores
             return await _operadorRepository.All();
         }
 
+        public Task FindById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task Update(Operador t)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Operador> Delete(Operador t)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
