@@ -14,7 +14,7 @@ namespace Domain.Interfaces
 
         Task Update(T t);
 
-        Task<T> Delete(int id);
+        Task Delete(T t);
         
     }
 }

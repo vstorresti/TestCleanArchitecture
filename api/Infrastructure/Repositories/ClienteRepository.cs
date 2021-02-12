@@ -16,30 +16,33 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<Cliente> Delete(int id)
+        public async Task Delete(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            _context.Clientes.Remove(cliente);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Cliente>> GetAll()
         {
             var cliente = _context.Clientes;
-            return await cliente.ToListAsync();
+            return await cliente.Include(x => x.Endereco).ToListAsync();
         }
 
-        public Task<Cliente> GetById(int id)
+        public async Task<Cliente> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Clientes.FindAsync(id);
         }
 
-        public Task Save(Cliente t)
+        public async Task Save(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
         }
 
-        public Task Update(Cliente t)
+        public async Task Update(Cliente cliente)
         {
-            throw new System.NotImplementedException();
+            _context.Clientes.Update(cliente);
+            await _context.SaveChangesAsync();
         }
     }
 }

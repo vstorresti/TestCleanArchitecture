@@ -10,10 +10,20 @@ namespace api.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            // Infrastructure Layer
+            // Application Layer
             services.AddScoped<IClienteService, ClienteService>();
-            //Application Layer
+            services.AddScoped<IOperadorService, OperadorService>();
+            services.AddScoped<IMarcaService, MarcaService>();
+            services.AddScoped<IModeloService, ModeloService>();
+            services.AddScoped<IVeiculoService, VeiculoService>();
+            services.AddScoped<ILocacaoVeiculoService, LocacaoVeiculoService>();
+            //Infrastructure Layer
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IOperadorRepository, OperadorRepository>();
+            services.AddScoped<IMarcaRepository, MarcaRepository>();
+            services.AddScoped<IModeloRepository, ModeloRepository>();
+            services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+            services.AddScoped<ILocacaoVeiculoRepository, LocacaoVeiculoRepository>();
             
         }
     }
