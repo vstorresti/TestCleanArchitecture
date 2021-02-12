@@ -1,6 +1,6 @@
+using api.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Domain.Entities;
 
 namespace api.Domain.Services
 {

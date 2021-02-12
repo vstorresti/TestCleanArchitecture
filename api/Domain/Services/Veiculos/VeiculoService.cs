@@ -1,8 +1,7 @@
 using api.Domain.Entities;
-using api.Domain.Repositories;
+using api.Domain.Repositories.Veiculos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Domain.Repositories.Veiculos;
 
 namespace api.Domain.Services.Veiculos
 {

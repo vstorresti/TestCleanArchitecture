@@ -1,8 +1,7 @@
 using api.Domain.Entities;
-using api.Domain.Repositories;
+using api.Domain.Repositories.Operadores;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Domain.Repositories.Operadores;
 
 namespace api.Domain.Services.Operadores
 {

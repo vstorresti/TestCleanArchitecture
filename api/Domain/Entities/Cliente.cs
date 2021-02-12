@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Domain.Entities
 {
-    [Table("Cliente")]
+    [Table("Clientes")]
     public class Cliente : PessoaAbstract
     {
 

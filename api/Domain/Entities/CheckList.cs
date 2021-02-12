@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace api.Domain.Entities
 {
+    [Table("CheckLists")]
     public class CheckList : BaseModel
     {
         public bool EstaLimpo { get; set; }

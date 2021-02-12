@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
 using api.Domain.Repositories.Clientes;
 using api.Domain.Repositories.Operadores;
 using api.Domain.Services.Clientes;
 using api.Domain.Services.Operadores;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace api.IoC
 {

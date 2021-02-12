@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Domain.Entities
 {
+    [Table("Veiculos")]
     public class Veiculo : BaseModel
     {
         public string Placa { get; set; }
@@ -16,6 +18,8 @@ namespace api.Domain.Entities
 
         public EnumTipoDeVeiculo TipoDeVeiculo { get; set; }
 
+        [ForeignKey("Modelo")]
+        public int ModeloId { get; set; }
         public Modelo Modelo { get; set; }
 
         public int Kilometragem { get; set; }

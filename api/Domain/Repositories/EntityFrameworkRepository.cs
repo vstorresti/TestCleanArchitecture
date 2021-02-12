@@ -19,27 +19,27 @@ namespace api.Domain.Repositories
             _entity = _entityContext.Set<Entity>();
         }
 
-        public async Task<IEnumerable<Entity>> All()
+        public virtual async Task<IEnumerable<Entity>> All()
         {
             return await _entity.ToListAsync();
         }
 
-        public Task<Entity> Delete(Entity entity)
+        public virtual Task<Entity> Delete(Entity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task FindById(int id)
+        public virtual Task FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Entity> Save(Entity entity)
+        public virtual Task<Entity> Save(Entity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Entity entity)
+        public virtual Task Update(Entity entity)
         {
             throw new NotImplementedException();
         }

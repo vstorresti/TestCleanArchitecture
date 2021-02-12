@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace api.Domain.Entities
 {
+    [Table("Enderecos")]
     public class Endereco : BaseModel
     {
 
@@ -9,7 +12,7 @@ namespace api.Domain.Entities
 
         public int Numero { get; set; }
 
-        public int Complemento { get; set; }
+        public string Complemento { get; set; }
 
         public string Cidade { get; set; }
 

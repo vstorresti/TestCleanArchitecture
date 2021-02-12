@@ -1,13 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Domain.Entities
 {
+    [Table("LocacaoVeiculos")]
     public class LocacaoVeiculo : BaseModel
     {
         public int TotalHoras { get; set; }
 
+        [ForeignKey("Veiculo")]
+        public int VeiculoId { get; set; }
+
         public Veiculo Veiculo { get; set; }
 
+        [ForeignKey("Cliente")]
+        public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
         public DateTime DataLocacao { get; set; }
@@ -16,6 +23,8 @@ namespace api.Domain.Entities
 
         public bool EstaLocado { get; set; }
 
+        [ForeignKey("Checklist")]
+        public int CheckelistId { get; set; }
         public CheckList CheckList { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Infra.Database;
 
 namespace api.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    partial class EntityContextModelSnapshot : ModelSnapshot
+    [Migration("20210212014231_primeiroSeed")]
+    partial class primeiroSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace api.Migrations
                         {
                             Id = -1,
                             Cpf = "111.111.111-11",
-                            DiaDeNascimento = new DateTime(2021, 2, 11, 22, 43, 35, 169, DateTimeKind.Local).AddTicks(3873),
+                            DiaDeNascimento = new DateTime(2021, 2, 11, 22, 42, 30, 364, DateTimeKind.Local).AddTicks(7154),
                             EndereçoId = -1,
                             Nome = "Cássio Morais",
                             Senha = "senhateste@",
@@ -100,8 +102,8 @@ namespace api.Migrations
                     b.Property<string>("Cidade")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Complemento")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Complemento")
+                        .HasColumnType("int");
 
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
@@ -122,6 +124,7 @@ namespace api.Migrations
                             Id = -1,
                             Cep = "00000-000",
                             Cidade = "Belo Horizonte",
+                            Complemento = 0,
                             Estado = "MG",
                             Logradouro = "Rua Fulano de tal, Bairro Beltrano",
                             Numero = 31

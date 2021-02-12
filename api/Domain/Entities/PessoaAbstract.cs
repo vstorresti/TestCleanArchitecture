@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Domain.Entities
 {
@@ -8,6 +9,8 @@ namespace api.Domain.Entities
 
         public DateTime DiaDeNascimento { get; set; }
 
+        [ForeignKey("Endereco")]
+        public int EndereçoId { get; set; }
         public Endereco Endereco { get; set; }
     }
 }
