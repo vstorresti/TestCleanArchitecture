@@ -1,9 +1,10 @@
+using System.Linq;
 using api.Domain.Entities;
-using api.Domain.Services;
+using api.Domain.Services.Clientes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace api.Controllers
 {
@@ -11,11 +12,11 @@ namespace api.Controllers
     {
         private readonly ILogger<ClienteController> _logger;
 
-        private readonly ClienteService _clienteService;
+        private readonly IClienteService _clienteService;
 
         public ClienteController(
             ILogger<ClienteController> logger,
-            ClienteService clienteService
+            IClienteService clienteService
         ) :
             base(logger)
         {
@@ -26,7 +27,7 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("/cliente")]
-        public async Task<ICollection<Cliente>> ListAll()
+        public async Task<IEnumerable<Cliente>> ListAll()
         {
             return await _clienteService.All();
         }

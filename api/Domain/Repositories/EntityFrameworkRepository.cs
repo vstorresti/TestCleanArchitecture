@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace api.Domain.Services
+namespace api.Domain.Repositories
 {
     public class EntityFrameworkRepository<Entity> : IGenericRepository<Entity> where Entity : BaseModel
     {
@@ -19,22 +19,22 @@ namespace api.Domain.Services
             _entity = _entityContext.Set<Entity>();
         }
 
-        public async Task<ICollection<Entity>> All()
+        public async Task<IEnumerable<Entity>> All()
         {
             return await _entity.ToListAsync();
         }
 
-        public Task<Entity> Delete(Entity user)
+        public Task<Entity> Delete(Entity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task FindById(Guid id)
+        public Task FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Entity> Save(Entity user)
+        public Task<Entity> Save(Entity entity)
         {
             throw new NotImplementedException();
         }

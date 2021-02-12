@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using api.IoC;
 
 namespace api
 {
@@ -34,8 +35,7 @@ namespace api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
 
-            services.AddScoped<ClienteRepository, ClienteRepository>();
-            services.AddScoped<ClienteService, ClienteService>();
+            RegisterServices(services);
 
         }
 
@@ -73,6 +73,11 @@ namespace api
                     context.Database.Migrate();
                 }
             }
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }

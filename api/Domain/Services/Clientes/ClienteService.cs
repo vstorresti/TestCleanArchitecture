@@ -1,13 +1,15 @@
 using api.Domain.Entities;
+using api.Domain.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using api.Domain.Repositories.Clientes;
 
-namespace api.Domain.Services
+namespace api.Domain.Services.Clientes
 {
-    public class ClienteService
+    public class ClienteService : IClienteService
     {
-        private readonly ClienteRepository _clienteRepository;
-        public ClienteService(ClienteRepository clienteRepository)
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteService(IClienteRepository clienteRepository)
         {
             _clienteRepository = clienteRepository;
         }
@@ -18,7 +20,7 @@ namespace api.Domain.Services
             await _clienteRepository.Save(cliente);
         }
 
-        public async Task<ICollection<Cliente>> All()
+        public async Task<IEnumerable<Cliente>> All()
         {
             return await _clienteRepository.All();
         }

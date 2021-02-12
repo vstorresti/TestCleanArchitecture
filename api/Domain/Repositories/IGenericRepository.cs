@@ -3,18 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace api.Domain.Services
+namespace api.Domain.Repositories
 {
     public interface IGenericRepository<Entity> where Entity : BaseModel
     {
-        Task FindById(Guid id);
+        Task FindById(int id);
 
         Task Update(Entity entity);
 
-        Task<Entity> Save(Entity user);
+        Task<Entity> Save(Entity entity);
 
-        Task<Entity> Delete(Entity user);
+        Task<Entity> Delete(Entity entity);
 
-        Task<ICollection<Entity>> All();
+        Task<IEnumerable<Entity>> All();
     }
 }

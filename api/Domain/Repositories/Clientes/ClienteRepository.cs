@@ -1,8 +1,8 @@
-﻿using api.Domain.Entities;
+﻿using api.Infra.Database;
+using api.Domain.Entities;
 using api.Domain.Repositories;
-using api.Infra.Database;
 
-namespace api.Domain.Services
+namespace api.Domain.Repositories.Clientes
 {
     public class ClienteRepository : EntityFrameworkRepository<Cliente>, IClienteRepository
     {
