@@ -1,14 +1,14 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.Models.Entities;
-using Application.ViewModel.Clientes;
 
 namespace Application.Interfaces
 {
     public interface IClienteService
     {
-        Task<ClienteViewModel> GetClientes();
+        Task<IEnumerable<Cliente>> GetClientes();
 
-        Task<ClienteVm> GetById(int id);
+        Task<Cliente> GetById(int id);
 
         Task Save(Cliente cliente);
 

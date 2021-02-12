@@ -7,42 +7,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class ClienteRepository : IClienteRepository
+    public class ClienteRepository : EntityFrameworkRepository<Cliente>, IClienteRepository
     {
         private DataContext _context;
+        private readonly DbSet<Cliente> _clientes;
 
-        public ClienteRepository(DataContext context)
+        public ClienteRepository(DataContext context): base(context)
         {
             _context = context;
+            _clientes = context.Set<Cliente>();
         }
 
-        public async Task Delete(Cliente cliente)
+        public override async Task<IEnumerable<Cliente>> GetAll()
         {
-            _context.Clientes.Remove(cliente);
-            await _context.SaveChangesAsync();
+            return await _clientes.Include( x => x.Endereco).ToListAsync();
         }
 
-        public async Task<IEnumerable<Cliente>> GetAll()
-        {
-            var cliente = _context.Clientes;
-            return await cliente.Include(x => x.Endereco).ToListAsync();
-        }
-
-        public async Task<Cliente> GetById(int id)
-        {
-            return await _context.Clientes.FindAsync(id);
-        }
-
-        public async Task Save(Cliente cliente)
-        {
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task Update(Cliente cliente)
-        {
-            _context.Clientes.Update(cliente);
-            await _context.SaveChangesAsync();
-        }
     }
 }

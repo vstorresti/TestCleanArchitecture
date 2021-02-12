@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using api.Controllers;
-using Application.ViewModel.Clientes;
 using api.Models.Entities;
 
 namespace Controllers
@@ -22,13 +22,13 @@ namespace Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ClienteViewModel>> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAll()
         {
             return await _service.GetClientes();
         }
 
         [HttpGet("cliente/{id}")]
-        public async Task<ClienteVm> GetById(int id)
+        public async Task<Cliente> GetById(int id)
         {
             return await _service.GetById(id);
         }

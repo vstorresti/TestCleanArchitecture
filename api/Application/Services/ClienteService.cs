@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.Models.Entities;
 using Application.Interfaces;
-using Application.ViewModel.Clientes;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -15,21 +15,14 @@ namespace Application.Services
             _clienteRepository = clienteRepository;
         }
 
-        public async Task<ClienteViewModel> GetClientes()
+        public async Task<IEnumerable<Cliente>> GetClientes()
         {
-            var clientes =
-                new ClienteViewModel()
-                { Clientes = await _clienteRepository.GetAll() };
-
-            return clientes;
+            return await _clienteRepository.GetAll();
         }
 
-        public async Task<ClienteVm> GetById(int id)
+        public async Task<Cliente> GetById(int id)
         {
-            var cliente =
-                new ClienteVm()
-                { Cliente = await _clienteRepository.GetById(id) };
-            return cliente;
+            return await _clienteRepository.GetById(id);
         }
 
         public async Task Save(Cliente cliente)

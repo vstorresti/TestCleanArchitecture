@@ -7,39 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class LocacaoVeiculoRepository : ILocacaoVeiculoRepository
+    public class LocacaoVeiculoRepository : EntityFrameworkRepository<LocacaoVeiculo>, ILocacaoVeiculoRepository
     {
         private DataContext _context;
+        private readonly DbSet<LocacaoVeiculo> _locacaoVeiculo;
 
-        public LocacaoVeiculoRepository(DataContext context)
+        public LocacaoVeiculoRepository(DataContext context): base(context)
         {
             _context = context;
+            _locacaoVeiculo = context.Set<LocacaoVeiculo>();
         }
 
-        public Task Delete(LocacaoVeiculo lv)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<IEnumerable<LocacaoVeiculo>> GetAll()
-        {
-            var locacaoVeiculo = _context.LocacaoVeiculos;
-            return await locacaoVeiculo.ToListAsync();
-        }
-
-        public Task<LocacaoVeiculo> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Save(LocacaoVeiculo t)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Update(LocacaoVeiculo t)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

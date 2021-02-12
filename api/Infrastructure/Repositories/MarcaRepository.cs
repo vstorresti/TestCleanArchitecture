@@ -7,39 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class MarcaRepository : IMarcaRepository
+    public class MarcaRepository : EntityFrameworkRepository<Marca>, IMarcaRepository
     {
         private DataContext _context;
+        private readonly DbSet<Marca> _marcas;
 
-        public MarcaRepository(DataContext context)
+        public MarcaRepository(DataContext context): base(context)
         {
             _context = context;
+            _marcas = context.Set<Marca>();
         }
 
-        public Task Delete(Marca t)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<IEnumerable<Marca>> GetAll()
-        {
-            var marca = _context.Marcas;
-            return await marca.ToListAsync();
-        }
-
-        public Task<Marca> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Save(Marca t)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Update(Marca t)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
