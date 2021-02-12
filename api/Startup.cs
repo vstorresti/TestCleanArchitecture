@@ -1,5 +1,5 @@
-using api.Infra.Database;
 using api.IoC;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,7 @@ namespace api
         {
 
             //JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "appsettings.json")));
-            services.AddDbContext<EntityContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
 
@@ -67,7 +67,7 @@ namespace api
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<EntityContext>())
+                using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
                 {
                     context.Database.Migrate();
                 }

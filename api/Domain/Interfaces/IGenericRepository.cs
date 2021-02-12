@@ -1,0 +1,20 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using api.Models.Entities;
+
+namespace Domain.Interfaces
+{
+    public interface IGenericRepository<T> where T :BaseModel
+    {
+        Task<IEnumerable<T>> GetAll();
+
+        Task<T> GetById(int id);
+
+        Task Save(T t);
+
+        Task Update(T t);
+
+        Task<T> Delete(int id);
+        
+    }
+}

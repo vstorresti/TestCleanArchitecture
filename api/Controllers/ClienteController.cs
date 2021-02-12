@@ -1,35 +1,26 @@
-using api.Domain.Entities;
-using api.Domain.Services.Clientes;
+using System.Threading.Tasks;
+using api.Controllers;
+using Application.Interfaces;
+using Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace api.Controllers
+namespace Controllers
 {
     public class ClienteController : BaseApiController
     {
-        private readonly ILogger<ClienteController> _logger;
+        private IClienteService _service;
 
-        private readonly IClienteService _clienteService;
-
-        public ClienteController(
-            ILogger<ClienteController> logger,
-            IClienteService clienteService
-        ) :
-            base(logger)
+        public ClienteController(ILogger<ClienteController> logger, IClienteService service) : base(logger)
         {
-            _logger = logger;
-            _clienteService = clienteService;
+            _service = service;
         }
-
 
         [HttpGet]
-        [Route("/cliente")]
-        public async Task<IEnumerable<Cliente>> ListAll()
+        public async Task<ActionResult<ClienteViewModel>> GetAll()
         {
-            return await _clienteService.All();
+            return await _service.GetClientes();
         }
-
+        
     }
 }
