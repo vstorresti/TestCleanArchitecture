@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models.Entities
+namespace api.Domain.Models
 {
     [Table("Veiculos")]
     public class Veiculo : BaseModel
@@ -23,5 +23,10 @@ namespace api.Models.Entities
         public Modelo Modelo { get; set; }
 
         public int Kilometragem { get; set; }
+
+        public bool EstaLocado { get; set; }
+
+        public string Motor { get; set; }
+        public string Imagem { get; set; }
     }
 }

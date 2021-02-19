@@ -1,21 +1,25 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Domain.Interfaces;
-using Infrastructure.Data;
-using api.Models.Entities;
+using api.Domain.Interfaces;
+using api.Domain.Models;
+using api.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories
+namespace api.Infrastructure.Repositories
 {
     public class OperadorRepository : EntityFrameworkRepository<Operador>, IOperadorRepository
     {
         private DataContext _context;
         private readonly DbSet<Operador> _operadores;
 
-        public OperadorRepository(DataContext context): base(context)
+        public OperadorRepository(DataContext context) : base(context)
         {
             _context = context;
             _operadores = context.Set<Operador>();
+        }
+
+        public async Task<Operador> UserExists(string register)
+        {
+            return await _operadores.SingleOrDefaultAsync(x => x.Matricula == register);
         }
 
     }

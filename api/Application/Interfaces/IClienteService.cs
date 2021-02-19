@@ -1,8 +1,9 @@
+using api.Domain.Models;
+using api.Domain.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Models.Entities;
 
-namespace Application.Interfaces
+namespace api.Application.Interfaces
 {
     public interface IClienteService
     {
@@ -10,7 +11,7 @@ namespace Application.Interfaces
 
         Task<Cliente> GetById(int id);
 
-        Task Save(Cliente cliente);
+        Task Save(UsuarioViewModel cliente);
 
         Task Delete(Cliente cliente);
 

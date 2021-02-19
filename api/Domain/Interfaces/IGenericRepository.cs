@@ -1,10 +1,10 @@
+using api.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Models.Entities;
 
-namespace Domain.Interfaces
+namespace api.Domain.Interfaces
 {
-    public interface IGenericRepository<T> where T :BaseModel
+    public interface IGenericRepository<T> where T : BaseModel
     {
         Task<IEnumerable<T>> GetAll();
 
@@ -15,6 +15,6 @@ namespace Domain.Interfaces
         Task Update(T t);
 
         Task Delete(T t);
-        
+
     }
 }

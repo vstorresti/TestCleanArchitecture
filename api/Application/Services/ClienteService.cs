@@ -1,14 +1,19 @@
+using api.Application.Interfaces;
+using api.Domain.Interfaces;
+using api.Domain.Models;
+using api.Domain.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
-using api.Models.Entities;
-using Application.Interfaces;
-using Domain.Interfaces;
 
-namespace Application.Services
+namespace api.Application.Services
 {
     public class ClienteService : IClienteService
     {
-        public IClienteRepository _clienteRepository;
+        private readonly IClienteRepository _clienteRepository;
 
         public ClienteService(IClienteRepository clienteRepository)
         {
@@ -22,22 +27,63 @@ namespace Application.Services
 
         public async Task<Cliente> GetById(int id)
         {
-            return await _clienteRepository.GetById(id);
+            try
+            {
+                return await _clienteRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public async Task Save(Cliente cliente)
+        public async Task Save(UsuarioViewModel clienteVM)
         {
-            await _clienteRepository.Save(cliente);
+            var hmac = new HMACSHA512();
+            var cliente = new Cliente()
+            {
+                Nome = clienteVM.Nome,
+                DiaDeNascimento = DateTime.ParseExact(clienteVM.DiaDeNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                Cpf = clienteVM.Cpf,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(clienteVM.Senha)),
+                PasswordSalt = hmac.Key,
+                TipoDeUsuario = clienteVM.TipoUsuario
+            };
+
+            try
+            {
+                await _clienteRepository.Save(cliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + $"{cliente.GetType().Name}");
+            }
+
         }
 
         public async Task Delete(Cliente cliente)
         {
-            await _clienteRepository.Delete(cliente);
+
+            try
+            {
+                await _clienteRepository.Delete(cliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + $"{cliente.GetType().Name}");
+            }
         }
 
         public async Task Update(Cliente cliente)
         {
-            await _clienteRepository.Update(cliente);
+            try
+            {
+                await _clienteRepository.Update(cliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + $"{cliente.GetType().Name}");
+            }
         }
     }
 }

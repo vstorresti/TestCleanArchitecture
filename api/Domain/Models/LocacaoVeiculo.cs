@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api.Models.Entities
+namespace api.Domain.Models
 {
     [Table("LocacaoVeiculos")]
     public class LocacaoVeiculo : BaseModel
@@ -21,10 +21,10 @@ namespace api.Models.Entities
 
         public DateTime DataDevolucao { get; set; }
 
-        public bool EstaLocado { get; set; }
+        public double ValorLocacao { get; set; }
+        
+        public double ValorFinal { get; set; }
 
-        [ForeignKey("Checklist")]
-        public int CheckelistId { get; set; }
-        public CheckList CheckList { get; set; }
+        public EnumStatusLocacao Status { get; set; }
     }
 }

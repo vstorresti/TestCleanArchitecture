@@ -1,12 +1,12 @@
+using api.Domain.Interfaces;
+using api.Domain.Models;
+using api.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api.Models.Entities;
-using Domain.Interfaces;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace api.Infrastructure.Repositories
 {
     public class EntityFrameworkRepository<Entity> : IGenericRepository<Entity> where Entity : BaseModel
     {
@@ -25,24 +25,58 @@ namespace Infrastructure.Repositories
             return await _entity.ToListAsync();
         }
 
-        public virtual Task Delete(Entity entity)
+        public async virtual Task Delete(Entity entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _entity.Remove(entity);
+                await _entityContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new Exception(ex.Message + "Não foi possível deletar: ");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "Não foi possível deletar: ");
+            }
         }
 
-        public virtual Task<Entity> GetById(int id)
+        public async virtual Task<Entity> GetById(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _entity.FindAsync(id);
+            if (entity != null)
+                return entity;
+            else
+                throw new Exception("Não foi encontrado objeto com o Id informado!");
         }
 
-        public virtual Task Save(Entity entity)
+        public async virtual Task Save(Entity entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _entity.AddAsync(entity);
+                await _entityContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new Exception("Não foi possível salvar: ");
+            }
+
         }
 
-        public virtual Task Update(Entity entity)
+        public async virtual Task Update(Entity entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _entity.Update(entity);
+                await _entityContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception(ex.Message + "Não foi possível atualizar: ");
+            }
+
         }
     }
 }

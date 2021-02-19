@@ -1,56 +1,113 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Interfaces;
+using api.Application.Interfaces;
+using api.Domain.Models;
+using api.Domain.ViewModels;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using api.Controllers;
-using api.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Controllers
+namespace api.Controllers
 {
+
     public class ClienteController : BaseApiController
     {
-        private IClienteService _service;
+        private IClienteService _clienteService;
+        private ILoginService _loginService;
+        private IMapper _mapper;
 
         public ClienteController(
             ILogger<ClienteController> logger,
-            IClienteService service
+            IClienteService service,
+            ILoginService loginService,
+            IMapper mapper
+
         ) :
-            base(logger)
+            base(logger, mapper)
         {
-            _service = service;
+            _mapper = mapper;
+            _clienteService = service;
+            _loginService = loginService;
         }
 
+        [Route("List")]
         [HttpGet]
-        public async Task<IEnumerable<Cliente>> GetAll()
+        [Authorize(Roles = "OPERADOR")]
+        public async Task<IEnumerable<UsuarioResponseViewModel>> GetAll()
         {
-            return await _service.GetClientes();
+            var clientes = await _clienteService.GetClientes();
+            var clientesVM = new List<UsuarioResponseViewModel>();
+
+            foreach (var cliente in clientes)
+            {
+                clientesVM.Add(_mapper.Map<UsuarioResponseViewModel>(cliente));
+            }
+
+            return clientesVM;
         }
 
-        [HttpGet("cliente/{id}")]
-        public async Task<Cliente> GetById(int id)
+        [Route("GetById/{id}")]
+        [HttpGet]
+        [Authorize(Roles = "OPERADOR")]
+        public async Task<UsuarioResponseViewModel> GetById(int id)
         {
-            return await _service.GetById(id);
+            try
+            {
+                return _mapper.Map<UsuarioResponseViewModel>(await _clienteService.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                return new UsuarioResponseViewModel { Error = ex.Message };
+            }
         }
 
-        [HttpPost]
-        public async Task Save([FromBody] Cliente cliente)
-        {
-            await _service.Save(cliente);
-        }
-
+        [Route("Update/{id}")]
         [HttpPut]
-        public async Task Update([FromBody] Cliente cliente)
+        [Authorize(Roles = "OPERADOR, CLIENTE")]
+        public async Task<IActionResult> Update(int id, [FromBody] UsuarioUpdateViewModel clienteVM)
         {
-            await _service.Update(cliente);
+            try
+            {
+                var cliente = _mapper.Map<Cliente>(clienteVM);
+
+                cliente.Id = id;
+                await _clienteService.Update(cliente);
+
+                return StatusCode(200, "atualizado com sucesso!");
+            }
+            catch (AutoMapperMappingException amex)
+            {
+                return StatusCode(400, amex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
+
         }
 
+        [Route("Delete/{id}")]
         [HttpDelete]
-        public async Task Delete([FromBody] Cliente cliente)
+        [Authorize(Roles = "OPERADOR")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _service.Delete(cliente);
+            try
+            {
+                await _clienteService.Delete(await _clienteService.GetById(id));
+
+                return StatusCode(200, "Deletado com sucesso!");
+            }
+            catch (AutoMapperMappingException amex)
+            {
+                return StatusCode(400, amex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, ex.Message);
+            }
         }
 
-        
     }
 }
